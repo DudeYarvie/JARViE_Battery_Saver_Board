@@ -1,7 +1,7 @@
-/*  BSB_Autotimeout.ino
+/*  BSB_Manual_Shutdown.ino
   Author: Jarvis Hill
-  Purpose: Example showing how use the JARViE Battery Saver Board to disconnect system power after a specified amout of time
-  Date: 15-MAR-2020
+  Purpose: Example showing how to use the JARViE Power Ranger Board to power on and off system power using the module tactile switch
+  Date: 27-JUNE-2020
 
   Version: 
           1.0 - Initial Release
@@ -14,14 +14,8 @@
 #include "BSB.h"
 #include "Timers.h"
 
-/*GLOBALS*/
 
-
-
-
-
-
-
+/*SETUP*/
 void setup() {
 
   //Init serial comms
