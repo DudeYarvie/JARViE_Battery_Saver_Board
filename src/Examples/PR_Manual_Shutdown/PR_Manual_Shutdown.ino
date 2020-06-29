@@ -1,4 +1,4 @@
-/*  BSB_Manual_Shutdown.ino
+/*  PR_Manual_Shutdown.ino
   Author: Jarvis Hill
   Purpose: Example showing how to use the JARViE Power Ranger module to power on and off system power using the module tactile switch
   Date: 27-JUNE-2020
