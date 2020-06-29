@@ -1,4 +1,4 @@
-/*  BSB_Autotimeout.ino
+/*  PR_Autotimeout.ino
   Author: Jarvis Hill
   Purpose: Example showing how use the JARViE Power Ranger module to disconnect system power after system does not receive user input after a 
   specified amount of time.
