@@ -1,4 +1,4 @@
-/*  TFT_Mobile_Phone_Demo.ino
+/*  PR_TFT_Mobile_Phone_Demo.ino
   Author: Jarvis Hill
   Purpose: Example showing how use the JARViE Power Ranger module to wakeup a system with a TFT display after the system 
   has been placed in low-power/sleep mode.
