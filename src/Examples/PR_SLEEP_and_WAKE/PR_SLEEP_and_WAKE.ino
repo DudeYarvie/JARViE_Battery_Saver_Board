@@ -1,4 +1,4 @@
-/*  BSB_SLEEP_and_WAKE.ino
+/*  PR_SLEEP_and_WAKE.ino
   Author: Jarvis Hill
   Purpose: Example showing how to use the JARViE Power Ranger module to wakeup an MCU placed in low-power/sleep mode
   Date: 27-JUNE-2020
