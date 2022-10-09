@@ -29,7 +29,7 @@ The Battery Saver Board features the MAXIM MAX1614, which is a high-side NMOSFET
 
 # **Technical Resources**
 ### ON/OFF Truth Table
-The following table provides insight on how to control the output power (OUT+) of the module:
+The following truth table shows the Battery Saver Board control signal logic required to turn on and off power at its output power pin (OUT+):
 ![Truth_table](https://raw.githubusercontent.com/DudeYarvie/JARViE_Power_Ranger/master/Reference%20Docs/Pics/MAX1614_Truth_Table.png "Truth Table")
 
 ### Debouncing Module's Push-Button
