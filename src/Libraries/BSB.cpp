@@ -71,12 +71,12 @@ ISR(INT0_vect){
 void BSB_init(){
   
   //nOFF
-  DDRD  |= (1 << BSB_nOFF_DDR);                //Set BRB nOFF signal to output to control BRB shutdown        
+  DDRD  |= (1 << BSB_nOFF_DDR);                //Set BSB nOFF signal to output to control BSB shutdown        
   PORTD &= ~(1 << BSB_nOFF);                   //Init signal to logic HIGH 
   
   //nON
-  DDRD  &= ~(1 << BSB_nON_DDR);                //Set BRB nON signal to input to monitor BRB SW1 state    
-  PORTD &= ~(1 << BSB_nON); 					         //Sets GPIO to Hi-Z       
+  DDRD  &= ~(1 << BSB_nON_DDR);                //Set BSB nON signal to input to monitor BSB SW1 state    
+  PORTD &= ~(1 << BSB_nON); 		       //Sets GPIO to Hi-Z       
 
   //Turn-off all PORTB GPIO
   DDRB  =  0xFF;
@@ -91,8 +91,8 @@ void BSB_init(){
 
 
 /*******************************************************************************
- * BSB_init
- * Purpose: Init I/O for BSB
+ * Turn_OFF_BSB
+ * Purpose: Turns the BSB off 
  *******************************************************************************/
 void Turn_OFF_BSB(){
 
@@ -105,8 +105,8 @@ void Turn_OFF_BSB(){
 
 
 /*******************************************************************************
- * enable_idle_timeout
- * Purpose: Start system timer that tracks idle timeout
+ * idle_timeout
+ * Purpose: Start or stop system timer that tracks idle timeout
  *******************************************************************************/
 void idle_timeout(uint8_t state){
    if (state == ON){  
@@ -122,7 +122,8 @@ void idle_timeout(uint8_t state){
 
 /****************************************************************************
  * manual_shutdown_trig
- * Purpose: Enables manual system shutdown using BRB SW1
+ * Purpose: Enables/disables manual system shutdown functionality via
+	    Arduino UNO (Atmega328p MCU) INT0 pin.
  ***************************************************************************/
 void manual_shutdown_trig(uint8_t state){
 
@@ -131,7 +132,7 @@ void manual_shutdown_trig(uint8_t state){
   //Configure external interrupt INT0 (Arduino digital pin 2) to trigger on any rising edge
   EICRA |= (1<<ISC01)|(1 << ISC00);
 
-  if (state == ON) EIMSK  |=   (1 << INT0);      //Enable external interrupt INT0
+  if (state == ON) EIMSK  |=   (1 << INT0);       //Enable external interrupt INT0
   if (state == OFF) EIMSK &= ~(1 << INT0);        //Disable external interrupt INT0  
   
 }
@@ -139,7 +140,8 @@ void manual_shutdown_trig(uint8_t state){
 
 /****************************************************************************
  * wakeup_trig
- * Purpose: Enables manual system shutdown using BRB SW1
+ * Purpose: Activates or deactivates system wake functionality via 
+	    Arduino UNO (Atmega328p MCU) INT1 pin.
  ***************************************************************************/
 void wakeup_trig(uint8_t state){
 
@@ -156,7 +158,7 @@ void wakeup_trig(uint8_t state){
 
 /****************************************************************************
  * manual_shutdown_init
- * Purpose: Tracks how long the manual shutdown button is pressed before executing
+ * Purpose: Ensures manual shutdown button is intentionally pressed or held before executing
  *          manaul shutdown sequence
  ***************************************************************************/
 void manual_shutdown_init(){
@@ -200,7 +202,7 @@ void manual_shutdown_init(){
 
 /**********************************************************************
  * auto_timeout
- * Purpose: auto_timeout example
+ * Purpose: Checks if autotimeout period has been reached
  **********************************************************************/
 uint8_t auto_timeout(){
 
@@ -215,9 +217,12 @@ uint8_t auto_timeout(){
   }
           
 }
-  
 
 
+/**********************************************************************
+ * gpio_sleep_state
+ * Purpose: Enable/disable gpio for MCU sleep/low-power mode
+ **********************************************************************/
 //void gpio_sleep_state(uint8_t state){
 //  
 //  if (state == OFF){
@@ -233,16 +238,17 @@ uint8_t auto_timeout(){
 //    return;                       //Do nothing, created for readibily 
 //  }
 //}
-
+  
 
 /**********************************************************************
  * sleep_mode
- * Purpose: Set MCU sleep/low-power mode and enable/disable it
+ * Purpose: Place MCU in sleep/low-power mode and enable/disable it
  **********************************************************************/
 void sleep_mode(uint8_t mode, uint8_t state){
   //char buf[50];                                           //Create character buffer for print messages
   //sprintf(buf, "%d %d", mode, state);           
-  //Serial.println(buf);                                    //DEBUG pring function params that were passed in
+  //Serial.println(buf);                                    //DEBUG print function params that were passed in
+  
   //Turn off TIMER
   idle_timeout(OFF);
   
@@ -252,7 +258,7 @@ void sleep_mode(uint8_t mode, uint8_t state){
   //Disable all PORTB GPIO and only leaves PD2 and PD3 enabled for INTs
   //gpio_sleep_state(OFF);
 
-  //Turn on INT1 (WAKE interrupt) and set trigger to rising edge
+  //Turn on INT0 (WAKE interrupt) and set trigger to rising edge
   wakeup_trig(ON);
 
   //Set sleep mode flag
